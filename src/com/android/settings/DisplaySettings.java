@@ -34,6 +34,7 @@ import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -44,6 +45,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import android.view.WindowManagerGlobal;
 import com.android.internal.view.RotationPolicy;
@@ -71,6 +73,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_ACCELEROMETER = "accelerometer";
     private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_SCREEN_SAVER = "screensaver";
+    private static final String KEY_ILLUMINATION = "illumination";
     private static final String KEY_DISPLAY_ROTATION = "display_rotation";
     private static final String KEY_ADAPTIVE_BACKLIGHT = "adaptive_backlight";
     private static final String KEY_SUNLIGHT_ENHANCEMENT = "sunlight_enhancement";
@@ -107,6 +110,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private ListPreference mScreenAnimationStylePreference;
 
     private PreferenceScreen mNotificationPulse;
+    private CheckBoxPreference mIllumination;
     private PreferenceScreen mBatteryPulse;
     private PreferenceScreen mDisplayRotationPreference;
     private PreferenceScreen mScreenColorSettings;
@@ -308,6 +312,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             }
         } else {
             getPreferenceScreen().removePreference(lightPrefs);
+        }
+
+        if (SystemProperties.getBoolean("ro.semc.illumination", false)) {
+            mIllumination = (CheckBoxPreference) findPreference(KEY_ILLUMINATION);
+            mIllumination.setOnPreferenceChangeListener(this);
+        } else {
+            getPreferenceScreen().removePreference(findPreference(KEY_ILLUMINATION));
+            mIllumination = null;
         }
     }
 
@@ -596,6 +608,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
                     Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
                     mWakeWhenPluggedOrUnplugged.isChecked() ? 1 : 0);
             return true;
+        } else if (preference == mIllumination && mIllumination != null) {
+            boolean status = mIllumination.isChecked();
+
+            if (status) {
+                Toast.makeText(getActivity(), "Illumination bar enabled", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Illumination bar disabled", Toast.LENGTH_SHORT).show();
+            }
         } else if (preference == mTapToWake) {
             final SharedPreferences prefs =
                     PreferenceManager.getDefaultSharedPreferences(getActivity());
