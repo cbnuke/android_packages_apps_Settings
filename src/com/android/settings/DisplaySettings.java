@@ -316,7 +316,12 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
         if (SystemProperties.getBoolean("ro.semc.illumination", false)) {
             mIllumination = (CheckBoxPreference) findPreference(KEY_ILLUMINATION);
-            mIllumination.setOnPreferenceChangeListener(this);
+
+            if (mIllumination != null) {
+                mIllumination.setChecked(Settings.System.getInt(resolver,
+                    Settings.System.ILLUMINATION_BAR, 0) == 1);
+                mIllumination.setOnPreferenceChangeListener(this);
+            }
         } else {
             getPreferenceScreen().removePreference(findPreference(KEY_ILLUMINATION));
             mIllumination = null;
@@ -610,6 +615,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             return true;
         } else if (preference == mIllumination && mIllumination != null) {
             boolean status = mIllumination.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.ILLUMINATION_BAR,
+                    status ? 1 : 0);
 
             if (status) {
                 Toast.makeText(getActivity(), "Illumination bar enabled", Toast.LENGTH_SHORT).show();
