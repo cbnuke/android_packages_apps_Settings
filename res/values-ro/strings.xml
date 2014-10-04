@@ -2046,6 +2046,6 @@
     <string name="regulatory_info_text" msgid="5623087902354026557"></string>
     
     <!-- Text pentru a controla bara de LED -->
-    <string name="illumination_title">Bara LED</string>
-    <string name="illumination_summary">Activare/Dezactivare bara LED pentru a obține o experiența asemănătoare cu ROM-ul stoc de la Sony</string>
+    <string name="illumination_title">"Bara LED"</string>
+    <string name="illumination_summary">"Activare/Dezactivare bara LED pentru a obține o experiența asemănătoare cu ROM-ul stoc de la Sony"</string>
 </resources>
