@@ -2043,4 +2043,8 @@
     <string name="user_image_take_photo" msgid="1280274310152803669">"Scatta foto"</string>
     <string name="user_image_choose_photo" msgid="7940990613897477057">"Scegli la foto dalla Galleria"</string>
     <string name="regulatory_info_text" msgid="5623087902354026557"></string>
+    
+    <!-- Testo per il controllo della barra LED -->
+    <string name="illumination_title">"Barra LED"</string>
+    <string name="illumination_summary">"Attiva o disattiva barra LED per ottenere un\'esperienza simile alla ROM stock di Sony"</string>
 </resources>
