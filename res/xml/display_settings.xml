@@ -188,10 +188,4 @@
 
         </PreferenceCategory>
 
-        <CheckBoxPreference
-                android:key="illumination"
-                android:title="@string/illumination_title"
-                android:summary="@string/illumination_summary"
-                android:persistent="false"/>
-
 </PreferenceScreen>
