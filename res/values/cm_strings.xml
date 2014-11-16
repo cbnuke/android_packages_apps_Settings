@@ -114,6 +114,8 @@
     <string name="connection_state_disabled">Disable</string>
     <string name="connection_state_enabled">Enable</string>
     <string name="volume_override_summary">Set to %1$s/%2$s</string>
+    <string name="volume_override_summary_no_override">Do not override</string>
+    <string name="profile_volume_override_checkbox_label">Override volume</string>
 
     <!-- Menu item for managing profiles -->
     <string name="profile_profiles_manage">Profiles</string>
@@ -180,9 +182,10 @@
 
     <!-- Ring mode -->
     <string name="ring_mode_title">Ring mode</string>
-    <string name="ring_mode_normal">Normal</string>
+    <string name="ring_mode_normal">Ring</string>
     <string name="ring_mode_vibrate">Vibrate</string>
     <string name="ring_mode_mute">Mute</string>
+    <string name="ring_mode_unchanged">Unchanged</string>
 
     <!-- Volume panel style -->
     <string name="volume_overlay_title">Volume panel style</string>
@@ -315,6 +318,7 @@
     <string name="lockscreen_enable_camera_title">Camera widget</string>
     <!-- "Pass" is a proper noun and should not be translated -->
     <string name="lockscreen_enable_application_widget_title">Pass widget</string>
+    <!-- "Baton" is a proper noun and should not be translated -->
     <string name="lockscreen_application_widget_summary">Baton feature: Quick launch cloudified apps running on other devices</string>
 
     <!-- Safe headset volume checkboxes -->
@@ -406,6 +410,8 @@
     <string name="cm_sound_mode_sound">Sound</string>
     <string name="cm_sound_mode_soundVibrate">Sound &amp; Vibrate</string>
     <string name="pref_location_mode_title">Location modes</string>
+    <string name="pref_location_mode_summary">Uncheck all modes for default behavior</string>
+    <string name="cm_location_mode_off">Location off</string>
     <string name="cm_location_mode_battery_saving">Battery saving</string>
     <string name="cm_location_mode_device_only">Device only</string>
     <string name="cm_location_mode_high_accuracy">High accuracy</string>
