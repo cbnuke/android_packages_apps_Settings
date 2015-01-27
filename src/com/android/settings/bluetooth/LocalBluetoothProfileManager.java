@@ -130,6 +130,8 @@ final class LocalBluetoothProfileManager {
        //Create PBAP server profile, but do not add it to list of profiles
        // as we do not need to monitor the profile as part of profile list
         mPbapProfile = new PbapServerProfile(context);
+        addProfile(mPbapProfile, PbapServerProfile.NAME,
+               BluetoothPbap.PBAP_STATE_CHANGED_ACTION);
 
         if (DEBUG) Log.d(TAG, "LocalBluetoothProfileManager construction complete");
     }
@@ -232,6 +234,7 @@ final class LocalBluetoothProfileManager {
             }
             int newState = intent.getIntExtra(BluetoothProfile.EXTRA_STATE, 0);
             int oldState = intent.getIntExtra(BluetoothProfile.EXTRA_PREVIOUS_STATE, 0);
+            Log.w(TAG, "StateChangedHandler mProfile = " + mProfile + " new state = " + newState);
             if (newState == BluetoothProfile.STATE_DISCONNECTED &&
                     oldState == BluetoothProfile.STATE_CONNECTING) {
                 Log.i(TAG, "Failed to connect " + mProfile + " device");
@@ -377,6 +380,12 @@ final class LocalBluetoothProfileManager {
             profiles.add(mMapProfile);
             removedProfiles.remove(mMapProfile);
             mMapProfile.setPreferred(device, true);
+        }
+
+        if ((mPbapProfile != null) &&
+            (mPbapProfile.getConnectionStatus(device) == BluetoothProfile.STATE_CONNECTED)) {
+            profiles.add(mPbapProfile);
+            removedProfiles.remove(mPbapProfile);
         }
     }
 

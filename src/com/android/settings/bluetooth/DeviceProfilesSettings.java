@@ -142,21 +142,26 @@ public final class DeviceProfilesSettings extends SettingsPreferenceFragment
     private void addPreferencesForProfiles() {
         mProfileContainer.removeAll();
         for (LocalBluetoothProfile profile : mCachedDevice.getConnectableProfiles()) {
-            Preference pref = createProfilePreference(profile);
-            mProfileContainer.addPreference(pref);
+            // MAP and PBAP profiles would be added based on permission access
+            if (!((profile instanceof PbapServerProfile) ||
+                (profile instanceof MapProfile))) {
+                Preference pref = createProfilePreference(profile);
+                mProfileContainer.addPreference(pref);
+            }
         }
 
         final int pbapPermission = mCachedDevice.getPhonebookPermissionChoice();
-        // Only provide PBAP cabability if the client device has requested PBAP.
-        if (pbapPermission != CachedBluetoothDevice.ACCESS_UNKNOWN) {
+        Log.d(TAG, "addPreferencesForProfiles: pbapPermission = " + pbapPermission);
+        if (pbapPermission == CachedBluetoothDevice.PBAP_CONNECT_RECEIVED) {
             final PbapServerProfile psp = mManager.getProfileManager().getPbapProfile();
             CheckBoxPreference pbapPref = createProfilePreference(psp);
             mProfileContainer.addPreference(pbapPref);
         }
 
-        final MapProfile mapProfile = mManager.getProfileManager().getMapProfile();
         final int mapPermission = mCachedDevice.getMessagePermissionChoice();
+        Log.d(TAG, "addPreferencesForProfiles: mapPermission = " + mapPermission);
         if (mapPermission != CachedBluetoothDevice.ACCESS_UNKNOWN) {
+            final MapProfile mapProfile = mManager.getProfileManager().getMapProfile();
             CheckBoxPreference mapPreference = createProfilePreference(mapProfile);
             mProfileContainer.addPreference(mapPreference);
         }
@@ -219,15 +224,6 @@ public final class DeviceProfilesSettings extends SettingsPreferenceFragment
     private void onProfileClicked(LocalBluetoothProfile profile, CheckBoxPreference profilePref) {
         BluetoothDevice device = mCachedDevice.getDevice();
 
-        if (profilePref.getKey().equals(KEY_PBAP_SERVER)) {
-            final int newPermission = mCachedDevice.getPhonebookPermissionChoice()
-                == CachedBluetoothDevice.ACCESS_ALLOWED ? CachedBluetoothDevice.ACCESS_REJECTED
-                : CachedBluetoothDevice.ACCESS_ALLOWED;
-            mCachedDevice.setPhonebookPermissionChoice(newPermission);
-            profilePref.setChecked(newPermission == CachedBluetoothDevice.ACCESS_ALLOWED);
-            return;
-        }
-
         int status = profile.getConnectionStatus(device);
         boolean isConnected =
                 status == BluetoothProfile.STATE_CONNECTED;
@@ -238,6 +234,12 @@ public final class DeviceProfilesSettings extends SettingsPreferenceFragment
             if (profile instanceof MapProfile) {
                 mCachedDevice.setMessagePermissionChoice(BluetoothDevice.ACCESS_ALLOWED);
                 refreshProfilePreference(profilePref, profile);
+            } else if (profile instanceof PbapServerProfile) {
+                // Special handling for pbap server, as server cant connect to client
+                mCachedDevice.setPhonebookPermissionChoice(
+                    CachedBluetoothDevice.PBAP_CONNECT_RECEIVED);
+                refreshProfilePreference(profilePref, profile);
+                return;
             }
             if (profile.isPreferred(device)) {
                 // profile is preferred but not connected: disable auto-connect
@@ -306,9 +308,16 @@ public final class DeviceProfilesSettings extends SettingsPreferenceFragment
                 refreshProfilePreference(profilePref, profile);
             }
         }
+
         for (LocalBluetoothProfile profile : mCachedDevice.getRemovedProfiles()) {
             Preference profilePref = findPreference(profile.toString());
             if (profilePref != null) {
+                if (profile instanceof PbapServerProfile) {
+                    final int pbapPermission = mCachedDevice.getPhonebookPermissionChoice();
+                    Log.d(TAG, "refreshProfiles: pbapPermission = " + pbapPermission);
+                    if (pbapPermission != CachedBluetoothDevice.ACCESS_UNKNOWN)
+                        continue;
+                }
                 Log.d(TAG, "Removing " + profile.toString() + " from profile list");
                 mProfileContainer.removePreference(profilePref);
             }
@@ -328,7 +337,6 @@ public final class DeviceProfilesSettings extends SettingsPreferenceFragment
             profilePref.setChecked(mCachedDevice.getMessagePermissionChoice()
                     == CachedBluetoothDevice.ACCESS_ALLOWED);
         } else if (profile instanceof PbapServerProfile) {
-            // Handle PBAP specially.
             profilePref.setChecked(mCachedDevice.getPhonebookPermissionChoice()
                     == CachedBluetoothDevice.ACCESS_ALLOWED);
         } else {
