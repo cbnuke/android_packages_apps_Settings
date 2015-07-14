@@ -17,60 +17,60 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string-array name="wifi_countrycode_entries">
-    <item>ئەمریکا</item>
-    <item>کەنەدا،تایوان</item>
-    <item>ئەلمانیا</item>
-    <item>ئەوروپا</item>
-    <item>ژاپۆن, ڕووسیا</item>
-    <item>ئوسترالیا</item>
-    <item>چین</item>
-    <item>کۆڕیا</item>
-    <item>تورکیا</item>
-    <item>سینگاپوور</item>
-    <item>به‌ڕازیل</item>
-    <item>هیندستان</item>
+    <item>Estados Unidos</item>
+    <item>Canadá, Taiwán</item>
+    <item>Alemania</item>
+    <item>Europa</item>
+    <item>Japón, Rusia</item>
+    <item>Australia</item>
+    <item>China</item>
+    <item>Corea</item>
+    <item>Turquía</item>
+    <item>Singapur</item>
+    <item>Brasil</item>
+    <item>India</item>
   </string-array>
   <string-array name="profile_entries">
-    <item>چالاک</item>
-    <item>ناچالاک</item>
-    <item>زیادەڕەوی نیە</item>
+    <item>Activo</item>
+    <item>Inactivo</item>
+    <item>No sobrescribir</item>
   </string-array>
   <string-array name="profile_connection_entries">
-    <item>ناچالاککردن</item>
-    <item>چالاککردن</item>
+    <item>Deshabilitado</item>
+    <item>Habilitado</item>
   </string-array>
   <string-array name="entries_screentimeout_widget">
-    <item>١٥s | ١m | ٥m</item>
-    <item>٣٠s | ٢m | ٥m</item>
+    <item>15s | 1m | 5m</item>
+    <item>30s | 2m | 5m</item>
   </string-array>
   <string-array name="data_usage_cycle_length">
-    <item>ڕۆژانە</item>
-    <item>هەفتانە</item>
-    <item>مانگانە</item>
+    <item>Diariamente</item>
+    <item>Semanalmente</item>
+    <item>Mensualmente</item>
   </string-array>
   <string-array name="data_usage_cycle_weekdays">
-    <item>یەکشەممە</item>
-    <item>دووشەممە</item>
-    <item>سێشەممە</item>
-    <item>چوارشەممە</item>
-    <item>پێنچ شەممە</item>
-    <item>هەینی</item>
-    <item>شەممە</item>
+    <item>Domingo</item>
+    <item>Lunes</item>
+    <item>Martes</item>
+    <item>Miércoles</item>
+    <item>Jueves</item>
+    <item>Viernes</item>
+    <item>Sábado</item>
   </string-array>
   <string-array name="app_ops_permissions">
-    <item>ڕێپێدراوه</item>
-    <item>نکوڵی کرا</item>
-    <item>هەمیشه پرسیارکردن</item>
+    <item>Permitir</item>
+    <item>Denegar</item>
+    <item>Preguntar</item>
   </string-array>
   <string-array name="qs_quick_access_size_entries">
-    <item>خۆکارانه‌</item>
-    <item>خۆکارانه‌(ته‌نگ)</item>
-    <item>گه‌وره‌</item>
-    <item>ته‌نگ</item>
+    <item>Automático</item>
+    <item>Automático (reducido)</item>
+    <item>Normal</item>
+    <item>Reducido</item>
   </string-array>
   <string-array name="screen_color_setting">
-    <item>ستاندارد</item>
-    <item>Vivid</item>
-    <item>بەکەسیکراو</item>
+    <item>Estándar</item>
+    <item>Intenso</item>
+    <item>Personalizado</item>
   </string-array>
 </resources>
